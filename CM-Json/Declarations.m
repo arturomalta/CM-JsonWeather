@@ -15,6 +15,9 @@ NSString *mstHumidity;
 NSString *mstPressure;
 NSString *mstTempMin;
 NSString *mstTempMax;
+NSString *mstLatitude;
+NSString *mstLongitude;
+NSString *mstImgWeather;
 
 @implementation Declarations
 
