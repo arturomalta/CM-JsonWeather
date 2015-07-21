@@ -8,20 +8,23 @@
 
 #import "Parser.h"
 
+#define nURLIcon     @"http://openweathermap.org/img/w/" 
+
 @implementation Parser
 
 + (void)parseWeather:(NSDictionary *)json {
     //check for valid value
     if(json != nil){
         NSDictionary    *main = [json valueForKey: @"main"];
-        mstTemp         = [[Parser kelvinToCelsius:[[main valueForKey: @"temp"] stringValue]] stringByAppendingString:@" °C"];
-        mstTempMax      = [[Parser kelvinToCelsius:[[main valueForKey: @"temp_max"] stringValue]] stringByAppendingString:@" °C"];
-        mstTempMin      = [[Parser kelvinToCelsius:[[main valueForKey: @"temp_min"] stringValue]] stringByAppendingString:@" °C"];
-        mstHumidity     = [[main valueForKey: @"humidity"] stringValue];
-        mstPressure     = [[main valueForKey: @"pressure"] stringValue];
-        
-        NSDictionary *weather = [json valueForKey:@"weather"];
-        mstImgWeather   = [weather valueForKey:@"icon"];
+        mstTemp         = [[self kelvinToCelsius:[[main valueForKey: @"temp"] stringValue]] stringByAppendingString:@" °C"];
+        mstTempMax      = [[self kelvinToCelsius:[[main valueForKey: @"temp_max"] stringValue]] stringByAppendingString:@" °C"];
+        mstTempMin      = [[self kelvinToCelsius:[[main valueForKey: @"temp_min"] stringValue]] stringByAppendingString:@" °C"];
+        mstHumidity     = [[[main valueForKey: @"humidity"] stringValue] stringByAppendingString:@" %"];
+        mstPressure     = [[[main valueForKey: @"pressure"] stringValue] stringByAppendingString:@" atm"];
+
+        mstImgWeather = [[[json objectForKey:@"weather"] valueForKey:@"icon"] objectAtIndex:0];
+        mstImgWeather = [nURLIcon stringByAppendingString:mstImgWeather];
+        mstImgWeather = [mstImgWeather stringByAppendingString:@".png"];
     }
 }
 
